@@ -1,0 +1,52 @@
+[
+    {
+      id: 1,
+      text: "Freelance Project",
+      amount: 45000,
+      category: "Work",
+      type: "income",
+      date: "2023-10-01",
+    },
+    {
+      id: 2,
+      text: "Grocery Store",
+      amount: -2400,
+      category: "Food",
+      type: "expense",
+      date: "2023-10-02",
+    },
+    {
+      id: 3,
+      text: "Monthly Rent",
+      amount: -15000,
+      category: "Housing",
+      type: "expense",
+      date: "2023-10-03",
+    },
+    {
+      id: 4,
+      text: "Investment Dividends",
+      amount: 1200,
+      category: "Investment",
+      type: "income",
+      date: "2023-10-04",
+    },
+  ]
+
+
+// addTransaction old code
+    const amount = parseFloat(formData.amount);
+    const finalAmount =
+      formData.type === "expense" ? -Math.abs(amount) : Math.abs(amount);
+
+    const newTransaction = {
+      id: Date.now(),
+      text: formData.text,
+      amount: finalAmount,
+      category: formData.category,
+      type: formData.type,
+      date: new Date().toISOString().split("T")[0],
+    };
+
+    setTransactions([newTransaction, ...transactions]);
+    setFormData({ text: "", amount: "", category: "General", type: "expense" });
