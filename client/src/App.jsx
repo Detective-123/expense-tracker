@@ -11,6 +11,8 @@ import Test from "./pages/Test.jsx";
 import ProfileSettings from "./pages/Settings.jsx";
 
 const App = () => {
+  console.log(import.meta.env.VITE_API_URL)
+
   return (
     <BrowserRouter>
       <Toaster
