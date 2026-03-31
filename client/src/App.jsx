@@ -9,6 +9,7 @@ import Register from "./pages/Register.jsx";
 import ComingSoon from "./pages/ComingSoon.jsx";
 import Test from "./pages/Test.jsx";
 import ProfileSettings from "./pages/Settings.jsx";
+import LandingPage from "./pages/LandingPage.jsx";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         }}
       />
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
