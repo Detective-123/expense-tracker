@@ -278,7 +278,7 @@ const Register = () => {
                   Already have an account?{" "}
                   <button
                     onClick={() => navigate("/login")}
-                    className="font-bold text-indigo-600 hover:text-indigo-700"
+                    className="font-bold text-indigo-600 cursor-pointer hover:text-indigo-700"
                   >
                     Sign in here
                   </button>

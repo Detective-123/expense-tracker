@@ -15,6 +15,12 @@ const login = async (data) => {
 // get user
 const getUser = async () => {
   const res = await api.get("/api/v1/auth/current-user");
+
+  if(res.status === 401){
+    logout();
+    return null
+  }
+  
   return res.data;
 };
 
