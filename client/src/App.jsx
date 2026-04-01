@@ -10,6 +10,8 @@ import ComingSoon from "./pages/ComingSoon.jsx";
 import Test from "./pages/Test.jsx";
 import ProfileSettings from "./pages/Settings.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
+import ProtectedRoute from "./pages/ProtectedRoute.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 const App = () => {
   return (
@@ -31,12 +33,30 @@ const App = () => {
       />
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/home" element={<Home />} />
+        
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/comingsoon" element={<ComingSoon />} />
-        <Route path="/test" element={<Test />} />
-        <Route path="/settings" element={<ProfileSettings />} />
+        <Route path="*" element={<NotFound />} />
+        {/* <Route path="/test" element={<Test />} /> */}
+
+        {/* --------------PROTECTED ROUTES-------------- */}
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <ProfileSettings />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

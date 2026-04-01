@@ -9,7 +9,7 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     const verify = async () => {
       try {
-        getUser();
+        await getUser();
         setIsAuth(true);
       } catch {
         setIsAuth(false);
