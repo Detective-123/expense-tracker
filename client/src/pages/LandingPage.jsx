@@ -97,7 +97,7 @@ const LandingPage = ({ onLogin, onRegister }) => {
           </div>
           
           <p className="mt-6 text-sm text-slate-500 font-medium">
-            No credit card required • 14-day free premium trial
+            No payment required free forever plan
           </p>
         </div>
       </section>

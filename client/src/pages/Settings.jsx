@@ -95,7 +95,7 @@ const ProfileSettings = ({ onBack, onLogout }) => {
                             <div className="h-24 w-24 rounded-full bg-linear-to-tr from-indigo-500 to-purple-500 p-1 shadow-lg shadow-indigo-100">
                                 <div className="h-full w-full rounded-full bg-white p-0.5">
                                     <img 
-                                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=John" 
+                                        src="https://api.dicebear.com/9.x/avataaars/svg?seed=Brooklynn" 
                                         alt="Profile" 
                                         className="rounded-full bg-slate-100 h-full w-full object-cover"
                                     />

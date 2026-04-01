@@ -93,7 +93,7 @@ const LoginPage = () => {
                   href="#"
                   className="text-xs font-bold text-indigo-600 hover:text-indigo-700"
                 >
-                  Forgot?
+                  Forgot Password?
                 </a>
               </div>
               <div className="relative">
@@ -122,7 +122,7 @@ const LoginPage = () => {
               </div>
             </div>
 
-            {/* Remember Me */}
+            {/* Remember Me
             <div className="flex items-center">
               <input
                 type="checkbox"
@@ -135,7 +135,7 @@ const LoginPage = () => {
               >
                 Remember me for 30 days
               </label>
-            </div>
+            </div> */}
 
             {/* Submit */}
             <button
@@ -184,7 +184,7 @@ const LoginPage = () => {
           Don't have an account?{" "}
           <span
             onClick={() => navigate("/register")}
-            className="font-bold text-indigo-600 hover:text-indigo-700"
+            className="font-bold text-indigo-600 cursor-pointer hover:text-indigo-700"
           >
             Create one for free
           </span>

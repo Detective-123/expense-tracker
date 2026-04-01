@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import {
   PlusCircle,
   MinusCircle,
@@ -18,7 +18,11 @@ import {
   LayoutDashboard,
   BarChart3,
   Settings,
+  EllipsisVerticalIcon,
+  Eye,
+  Edit2,
   LogOut,
+  MoreVertical,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -37,6 +41,9 @@ const Home = () => {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [registeredUser, setRegisteredUser] = useState(null);
   const [expenses, setExpenses] = useState([]);
+  // const [open, setOpen] = useState(false)
+  const [activeDropdownId, setActiveDropdownId] = useState(null);
+  const dropdownRef = useRef(null);
   const [formData, setFormData] = useState({
     text: "",
     amount: "",
@@ -86,9 +93,23 @@ const Home = () => {
         );
       }
     };
-
     fetchExpense();
   }, []);
+
+  // for dropdown state changes
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setActiveDropdownId(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const toggleDropdown = (id) => {
+    setActiveDropdownId(activeDropdownId === id ? null : id);
+  };
 
   // --- Derived Calculations ---
   const totals = useMemo(() => {
@@ -302,10 +323,10 @@ const Home = () => {
                 </div>
                 <div className="ml-3">
                   <div className="text-base font-medium text-slate-800">
-                    Alex Rivera
+                    {registeredUser.user.fullname}
                   </div>
                   <div className="text-sm font-medium text-slate-500">
-                    alex@example.com
+                    {registeredUser.user.email}
                   </div>
                 </div>
               </div>
@@ -388,10 +409,10 @@ const Home = () => {
                     Transaction History
                   </h2>
                   <div className="flex gap-2">
-                    <button className="text-xs font-semibold px-3 py-1 bg-slate-100 rounded hover:bg-slate-200 transition-colors">
+                    <button className="text-xs font-semibold px-3 py-1 bg-slate-100 rounded hover:bg-slate-200 cursor-pointer transition-colors">
                       Export CSV
                     </button>
-                    <button className="text-xs font-semibold px-3 py-1 bg-indigo-50 text-indigo-600 rounded hover:bg-indigo-100 transition-colors">
+                    <button className="text-xs font-semibold px-3 py-1 bg-indigo-50 text-indigo-600 rounded hover:bg-indigo-100 cursor-pointer transition-colors">
                       Filters
                     </button>
                   </div>
@@ -441,18 +462,41 @@ const Home = () => {
                               {formatDate(t.createdAt)}
                             </td>
                             <td
-                              className={`px-6 py-4 text-right font-bold ${t.type === "income" ? "text-emerald-600" : "text-slate-800"}`}
+                              className={`px-6 py-4 text-right font-bold ${t.type === "income" ? "text-emerald-600" : "text-rose-600"}`}
                             >
-                              {t.type === "income" ? "+" : ""}
+                              {t.type === "income" ? "+" : "-"}
                               {formatCurrency(t.amount)}
                             </td>
                             <td className="px-6 py-4 text-right">
-                              <button
-                                onClick={() => deleteTransaction(t._id)}
-                                className="text-slate-300 hover:text-rose-500 transition-colors opacity-0 group-hover:opacity-100 p-1"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </button>
+                              <div className="relative inline-block">
+                                <button
+                                  onClick={() => toggleDropdown(t._id)}
+                                  className="text-black-400 hover:text-black-600 transition-colors opacity-100 group-hover:opacity-100 p-1"
+                                >
+                                  <MoreVertical className="w-4 h-4" />
+                                </button>
+                                {/* Dropdown menu */}
+                                {activeDropdownId === t._id && (
+                                  <div className="absolute right-6 mt-2 w-44 bg-white shadow-xl rounded-xl border border-slate-100 z-50 py-2 animate-in fade-in zoom-in-95 duration-100 origin-top-right">
+                                    <ul>
+                                      <li className="px-4 py-2 hover:bg-slate-50 cursor-pointer text-sm text-slate-700 flex items-center gap-3 transition-colors">
+                                        <Eye className="w-4 h-4 text-slate-400" />{" "}
+                                        View Details
+                                      </li>
+                                      <li className="px-4 py-2 hover:bg-slate-50 cursor-pointer text-sm text-indigo-600 font-medium flex items-center gap-3 transition-colors">
+                                        <Edit2 className="w-4 h-4" /> Edit
+                                        Expense
+                                      </li>
+                                      <li className="my-1 border-t border-slate-50"></li>
+                                      <li
+                                      onClick={() => deleteTransaction(t._id)} 
+                                      className="px-4 py-2 hover:bg-rose-50 cursor-pointer text-sm text-rose-600 flex items-center gap-3 transition-colors">
+                                        <Trash2 className="w-4 h-4" /> Delete
+                                      </li>
+                                    </ul>
+                                  </div>
+                                )}
+                              </div>
                             </td>
                           </tr>
                         ))
@@ -618,7 +662,7 @@ const Home = () => {
       {/* Footer */}
       <footer className="mt-12 py-8 border-t border-slate-200 text-center">
         <p className="text-sm text-slate-400">
-          © 2023 Finflow India. Tracking simplified for INR.
+          © 2026 Finflow India. Tracking simplified for INR.
         </p>
       </footer>
     </div>
