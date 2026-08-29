@@ -16,6 +16,9 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // title
+  document.title = "Login - BrokeBuddy"
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -36,10 +39,10 @@ const LoginPage = () => {
         error: (err) => err?.response?.data?.message || "Failed to login",
       });
 
-      console.log("LOGIN SUCCESS", res.data);
+      // console.log("LOGIN SUCCESS", res.data);
     } catch (error) {
       // console.error(error?.response?.data?.message || "Login failed");
-      toast.error(error?.response?.data?.message || "Login Failed");
+      toast.error(error?.response?.data?.message || "Failed to login")
     }
   };
 
@@ -55,7 +58,7 @@ const LoginPage = () => {
             <Wallet className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
-            Welcome to Finflow
+            Welcome to BrokeBuddy
           </h1>
           <p className="text-slate-500 mt-2">Sign in to manage your expenses</p>
         </div>

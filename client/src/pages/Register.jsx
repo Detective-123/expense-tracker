@@ -37,6 +37,9 @@ const Register = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [registeredUser, setRegisteredUser] = useState(null);
 
+  // title
+  document.title = "Register - BrokeBuddy";
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -64,17 +67,37 @@ const Register = () => {
         success: (res) => {
           setFormData(initialFormData);
 
-          console.log("REGISTER SUCCESS: ", res.data);
+          // console.log("REGISTER SUCCESS: ", res.data);
           setTimeout(() => {
             setIsSuccess(true);
           }, 1500);
           setRegisteredUser(res.data.user);
           return res.message || "Account created successfully!";
         },
-        error: (err) => err?.response?.data?.message || "Registration Failed",
+        error: (err) => {
+          const data = err?.response?.data
+
+          if (data?.errors.length > 0) return "Validation failed"
+          return data?.message || "Registration Failed"
+        }
       });
     } catch (error) {
-      console.error(error?.response?.data?.message || "Registration failed");
+      // console.error(error)
+      console.error(error?.response)
+      console.error(error?.response?.data);
+
+      const errorData = error?.response?.data;
+      // general error
+      // validator errors
+      if (errorData?.errors) {
+        errorData?.errors?.forEach((errObj) => {
+          Object.values(errObj).forEach((msg) => {
+            toast.error(msg);
+          });
+        });
+      } else {
+        toast.error(errorData?.message);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -126,7 +149,7 @@ const Register = () => {
                 <UserPlus className="w-8 h-8 text-white" />
               </div>
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">
-                Join Finflow
+                Join BrokeBuddy
               </h1>
               <p className="text-slate-500 mt-2">
                 Start your journey to better financial health
