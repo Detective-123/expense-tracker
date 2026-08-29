@@ -18,6 +18,9 @@ const NotFound = () => {
     window.history.back();
   };
 
+  // title
+  document.title = "404 Not Found"
+
   const navigate = useNavigate()
 
   return (
@@ -27,7 +30,7 @@ const NotFound = () => {
         <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-200">
           <Wallet className="text-white w-5 h-5" />
         </div>
-        <span className="text-xl font-bold tracking-tight text-slate-800">FinFlow</span>
+        <span className="text-xl font-bold tracking-tight text-slate-800">BrokeBuddy</span>
       </div>
 
       <main className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -137,7 +140,7 @@ const NotFound = () => {
 
       {/* Footer Branding */}
       <footer className="absolute bottom-8 text-slate-400 text-[10px] font-bold uppercase tracking-[0.3em]">
-        FinFlow Ledger System • Error Log 404
+        BrokeBuddy Ledger System • Error Log 404
       </footer>
     </div>
   );

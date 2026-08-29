@@ -7,7 +7,6 @@ import Login from "./pages/Login.jsx";
 import Home from "./pages/Home.jsx";
 import Register from "./pages/Register.jsx";
 import ComingSoon from "./pages/ComingSoon.jsx";
-import Test from "./pages/Test.jsx";
 import ProfileSettings from "./pages/Settings.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 import ProtectedRoute from "./pages/ProtectedRoute.jsx";
@@ -37,8 +36,9 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/comingsoon" element={<ComingSoon />} />
+
+        {/* anything other than working routes */}
         <Route path="*" element={<NotFound />} />
-        {/* <Route path="/test" element={<Test />} /> */}
 
         {/* --------------PROTECTED ROUTES-------------- */}
         <Route
