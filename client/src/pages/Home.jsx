@@ -25,6 +25,7 @@ import {
   MoreVertical,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { createPortal } from "react-dom";
 
 // import api services
 import { getUser } from "../services/authServices.js";
@@ -41,7 +42,9 @@ const Home = () => {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [registeredUser, setRegisteredUser] = useState(null);
   const [expenses, setExpenses] = useState([]);
-  // const [open, setOpen] = useState(false)
+
+  const [dropdownPos, setDropdownPos] = useState(null);
+  const buttonRefs = useRef({});
   const [activeDropdownId, setActiveDropdownId] = useState(null);
   const dropdownRef = useRef(null);
   const [formData, setFormData] = useState({
@@ -50,6 +53,9 @@ const Home = () => {
     category: "General",
     type: "expense",
   });
+
+  // change title
+  document.title = "Home - BrokeBuddy"
 
   // useEffect hook renders once after the page reloads
   useEffect(() => {
@@ -106,6 +112,15 @@ const Home = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    const handleClick = () => setDropdownPos(null)
+
+    if(dropdownPos){
+      document.addEventListener("click", handleClick)
+    }
+    return () => document.removeEventListener("click", handleClick)
+  }, [dropdownPos])
 
   const toggleDropdown = (id) => {
     setActiveDropdownId(activeDropdownId === id ? null : id);
@@ -231,7 +246,7 @@ const Home = () => {
                   <Wallet className="w-6 h-6 text-white" />
                 </div>
                 <span className="text-xl font-bold bg-clip-text text-transparent bg-linear-to-r from-indigo-600 to-violet-600">
-                  Finflow
+                  BrokeBuddy
                 </span>
               </div>
 
@@ -470,32 +485,60 @@ const Home = () => {
                             <td className="px-6 py-4 text-right">
                               <div className="relative inline-block">
                                 <button
-                                  onClick={() => toggleDropdown(t._id)}
+                                  ref={(el) => (buttonRefs.current[t._id] = el)}
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    const rect =
+                                      buttonRefs.current[
+                                        t._id
+                                      ].getBoundingClientRect();
+
+                                    setDropdownPos({
+                                      id: t._id,
+                                      top: rect.bottom + 5,
+                                      left: rect.right - 100,
+                                    });
+                                  }}
                                   className="text-black-400 hover:text-black-600 transition-colors opacity-100 group-hover:opacity-100 p-1"
                                 >
                                   <MoreVertical className="w-4 h-4" />
                                 </button>
                                 {/* Dropdown menu */}
-                                {activeDropdownId === t._id && (
-                                  <div className="absolute right-6 mt-2 w-44 bg-white shadow-xl rounded-xl border border-slate-100 z-50 py-2 animate-in fade-in zoom-in-95 duration-100 origin-top-right">
-                                    <ul>
-                                      <li className="px-4 py-2 hover:bg-slate-50 cursor-pointer text-sm text-slate-700 flex items-center gap-3 transition-colors">
-                                        <Eye className="w-4 h-4 text-slate-400" />{" "}
-                                        View Details
-                                      </li>
-                                      <li className="px-4 py-2 hover:bg-slate-50 cursor-pointer text-sm text-indigo-600 font-medium flex items-center gap-3 transition-colors">
-                                        <Edit2 className="w-4 h-4" /> Edit
-                                        Expense
-                                      </li>
-                                      <li className="my-1 border-t border-slate-50"></li>
-                                      <li
-                                      onClick={() => deleteTransaction(t._id)} 
-                                      className="px-4 py-2 hover:bg-rose-50 cursor-pointer text-sm text-rose-600 flex items-center gap-3 transition-colors">
-                                        <Trash2 className="w-4 h-4" /> Delete
-                                      </li>
-                                    </ul>
-                                  </div>
-                                )}
+                                {dropdownPos &&
+                                  createPortal(
+                                    <div
+                                      style={{
+                                        position: "fixed",
+                                        top: dropdownPos.top,
+                                        left: dropdownPos.left,
+                                      }}
+                                      className="w-44 bg-white shadow-lg rounded-xl border border-slate-100 z-50 py-2 animate-in fade-in zoom-in-95 duration-100"
+                                    >
+                                      <ul>
+                                        <li className="px-4 py-2 hover:bg-slate-50 cursor-pointer text-sm flex items-center gap-3">
+                                          <Eye className="w-4 h-4" /> View
+                                          Details
+                                        </li>
+
+                                        <li className="px-4 py-2 hover:bg-slate-50 cursor-pointer text-sm text-indigo-600 flex items-center gap-3">
+                                          <Edit2 className="w-4 h-4" /> Edit
+                                          Expense
+                                        </li>
+
+                                        <li className="my-1 border-0"></li>
+
+                                        <li
+                                          onClick={() =>
+                                            deleteTransaction(dropdownPos.id)
+                                          }
+                                          className="px-4 py-2 hover:bg-rose-50 cursor-pointer text-sm text-rose-600 flex items-center gap-3"
+                                        >
+                                          <Trash2 className="w-4 h-4" /> Delete
+                                        </li>
+                                      </ul>
+                                    </div>,
+                                    document.body,
+                                  )}
                               </div>
                             </td>
                           </tr>
@@ -662,7 +705,7 @@ const Home = () => {
       {/* Footer */}
       <footer className="mt-12 py-8 border-t border-slate-200 text-center">
         <p className="text-sm text-slate-400">
-          © 2026 Finflow India. Tracking simplified for INR.
+          © 2026 BrokeBuddy India. Tracking simplified for INR.
         </p>
       </footer>
     </div>

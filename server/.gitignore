@@ -138,3 +138,5 @@ sketch
 
 
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Node,react,js,env
+
+*.txt

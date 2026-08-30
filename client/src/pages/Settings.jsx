@@ -21,6 +21,8 @@ import { useNavigate } from 'react-router-dom';
 const ProfileSettings = ({ onBack, onLogout }) => {
   const navigate = useNavigate();
 
+  document.title = "Settings - BrokeBuddy"
+
   const [isSaved, setIsSaved] = useState(false);
   const [showPasswordSection, setShowPasswordSection] = useState(false);
   const initialUserData = {

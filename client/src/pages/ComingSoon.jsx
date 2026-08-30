@@ -20,6 +20,8 @@ const ComingSoon = () => {
     }
   };
 
+  document.title = "Coming Soon - BrokeBuddy"
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans antialiased text-slate-900 overflow-hidden">
       
@@ -111,11 +113,11 @@ const ComingSoon = () => {
           <div className="flex items-center gap-2 opacity-50 grayscale hover:grayscale-0 transition-all">
             <ShieldCheck className="w-5 h-5 text-slate-400" />
             <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
-              Finflow Advanced Protection
+              BrokeBuddy Advanced Protection
             </span>
           </div>
           <p className="text-slate-400 text-xs font-medium">
-            © 2026 Finflow Technologies Inc. All rights reserved.
+            © 2026 BrokeBuddy Technologies Inc. All rights reserved.
           </p>
         </div>
       </footer>

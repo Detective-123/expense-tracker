@@ -36,7 +36,7 @@ const LandingPage = ({ onLogin, onRegister }) => {
                 <Wallet className="h-5 w-5 text-white" />
               </div>
               <span className="text-xl font-black tracking-tight text-slate-900">
-                Fin<span className="text-indigo-600">flow</span>
+                Broke<span className="text-indigo-600">Buddy</span>
               </span>
             </div>
 
@@ -267,7 +267,7 @@ const LandingPage = ({ onLogin, onRegister }) => {
           <div className="flex items-center gap-2">
             <Wallet className="h-5 w-5 text-indigo-600" />
             <span className="text-lg font-black tracking-tight text-slate-900">
-              Fin<span className="text-indigo-600">flow</span>
+              Broke<span className="text-indigo-600">Buddy</span>
             </span>
           </div>
           
