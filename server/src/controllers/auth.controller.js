@@ -102,7 +102,7 @@ const loginUser = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
-    sameSite: "none"
+    sameSite: "none",
   };
 
   return res
@@ -134,7 +134,7 @@ const logoutUser = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
-    sameSite: "none"
+    sameSite: "none",
   };
 
   return res
@@ -147,7 +147,13 @@ const logoutUser = asyncHandler(async (req, res) => {
 const getCurrentUser = asyncHandler(async (req, res) => {
   return res
     .status(200)
-    .json(new ApiResponse(200, {user: req.user}, "Current user fetched successfully"));
+    .json(
+      new ApiResponse(
+        200,
+        { user: req.user },
+        "Current user fetched successfully",
+      ),
+    );
 });
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
@@ -201,24 +207,42 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 });
 
 const changeCurrPassword = asyncHandler(async (req, res) => {
-  const {oldPassword, newPassword } = req.body
+  const { oldPassword, newPassword } = req.body;
 
-  const user = await User.findById(req.user._id)
+  const user = await User.findById(req.user._id);
 
-  const isPasswordValid = await User.isPasswordCorrect(oldPassword)
-  if(!isPasswordValid){
-    throw new ApiError(400, "Invalid password")
+  const isPasswordValid = await User.isPasswordCorrect(oldPassword);
+  if (!isPasswordValid) {
+    throw new ApiError(400, "Invalid password");
   }
 
-  user.password = newPassword
-  await user.save({validateBeforeSave: false})
+  user.password = newPassword;
+  await user.save({ validateBeforeSave: false });
 
   return res
     .status(200)
-    .json(new ApiResponse(200, {}, "Password changed successfully"))
+    .json(new ApiResponse(200, {}, "Password changed successfully"));
 });
+
+const forgotPasswordRequest = asyncHandler(async (req, res) => {});
+const resetForgotPassword = asyncHandler(async (req, res) => {});
+const resendEmailVerification = asyncHandler(async (req, res) => {});
+const verifyEmail = asyncHandler(async (req, res) => {});
+
+// OAuth login google and github
+const googleOAuthLogin = asyncHandler(async (req, res) => {});
+const githubOAuthLogin = asyncHandler(async (req, res) => {});
 
 const somethingFunc = asyncHandler(async (req, res) => {});
 
-
-export { registerUser, loginUser, logoutUser, getCurrentUser, refreshAccessToken };
+export {
+  registerUser,
+  loginUser,
+  logoutUser,
+  getCurrentUser,
+  refreshAccessToken,
+  forgotPasswordRequest,
+  resetForgotPassword,
+  resendEmailVerification,
+  verifyEmail,
+};
